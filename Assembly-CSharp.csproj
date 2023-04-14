@@ -57,9 +57,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\BgController.cs" />
-    <Compile Include="Assets\Bolt 2D DinoRun VE1\ReadMe\Scripts\ReadmeVE1.cs" />
-    <Compile Include="Assets\GameManager.cs" />
     <Compile Include="Assets\PlayerController.cs" />
+    <Compile Include="Assets\Bolt 2D DinoRun VE1\ReadMe\Scripts\ReadmeVE1.cs" />
+    <Compile Include="Assets\CanvasController.cs" />
+    <Compile Include="Assets\GameManager.cs" />
+    <Compile Include="Assets\TextController.cs" />
+    <Compile Include="Assets\Save.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
