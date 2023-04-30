@@ -23,7 +23,7 @@ public class BgController : MonoBehaviour
         {
             transform.Translate(Vector3.left * Time.fixedDeltaTime * speed);
             distance += (Time.fixedDeltaTime * speed);
-            Text text = (Text)GameObject.Find("Text").GetComponent<Text>();
+            Text text = (Text)GameObject.Find("Canvas").transform.GetChild(0).GetComponent<Text>();
             text.text = "" + (int)distance;
         }
         else

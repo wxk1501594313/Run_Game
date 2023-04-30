@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
             () =>
             {
                 Time.timeScale = 1;//开启时间流动
-                EditorSceneManager.LoadScene("SampleScene");//重复加载场景
+                SceneManager.LoadScene(0);//重复加载场景
             }
         );
         GameObject.Find("Canvas").transform.GetChild(2).GetChild(0).GetComponent<Button>().onClick.AddListener(

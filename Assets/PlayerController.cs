@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,7 +12,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rigidbody;
     public UnityEngine.Events.UnityEvent gameOver;
     AudioSource audioSource;
-    public AudioClip run, jump;
+    public AudioClip dead, jump;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,12 +20,36 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
         rigidbody = GetComponent<Rigidbody2D>();
         audioSource = GetComponent<AudioSource>();
-        //GameObject.Find("Canvas").transform.GetChild(1).GetChild(1).GetComponent<Button>().onClick.AddListener(
-        //    () =>
-        //    {
-        //        anim.SetBool("GameOver", true);
-        //    }
-        //);
+
+        GameObject.Find("Canvas").transform.GetChild(3).GetChild(0).GetComponent<Button>().onClick.AddListener(
+            () =>
+            {
+                if (canJump)
+                {
+                    canJump = false;
+                    anim.SetBool("Jump", true);
+                    anim.SetBool("InGround", false);
+                    rigidbody.AddForce(Vector2.up * 700);
+                    audioSource.clip = jump;//更换至跳跃音频
+                    audioSource.loop = false;//不开启循环播放
+                    audioSource.Play();//播放音频
+                }
+            }
+        );
+        GameObject.Find("Canvas").transform.GetChild(3).GetChild(1).GetComponent<Button>().GetComponent<ButtonController>().buttonDown.AddListener(
+            () =>
+            {
+                anim.SetBool("Down", true);
+                if (anim.GetBool("Jump") == true)
+                    rigidbody.AddForce(Vector2.down * 500);
+            }
+        );
+        GameObject.Find("Canvas").transform.GetChild(3).GetChild(1).GetComponent<Button>().GetComponent<ButtonController>().buttonUp.AddListener(
+            () =>
+            {
+                anim.SetBool("Down", false);
+            }
+        );
     }
 
     // Update is called once per frame
@@ -58,13 +84,13 @@ public class PlayerController : MonoBehaviour
             canJump = true;
             anim.SetBool("Jump", false);
             anim.SetBool("InGround", true);
-            audioSource.clip = run;//更换至跳跃音频
-            audioSource.loop = true;//不开启循环播放
-            audioSource.Play();//播放音频
         }
         else if(collision.gameObject.tag == "Obstacle")
         {
             //发表结算事件
+            audioSource.clip = dead;//更换至跳跃音频
+            audioSource.loop = false;//不开启循环播放
+            audioSource.Play();//播放音频
             gameOver.Invoke();
             anim.SetBool("GameOver", true);
             Invoke("StopGame", 0.2f);
